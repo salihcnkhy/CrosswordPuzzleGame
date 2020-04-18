@@ -1,0 +1,35 @@
+﻿<Properties StartupConfiguration="{B6F17689-F921-307B-97AD-1E02EA1A7DE4}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GameManager.cs">
+    <Files>
+      <File FileName="Assets/Scripts/Bullet.cs" Line="37" Column="5" />
+      <File FileName="Assets/Scripts/UIManager.cs" Line="18" Column="11" />
+      <File FileName="Assets/Scripts/GameManager.cs" Line="125" Column="1" />
+      <File FileName="Assets/Scripts/CanonManager.cs" Line="29" Column="18" />
+      <File FileName="Assets/Scripts/LevelManager.cs" Line="28" Column="32" />
+      <File FileName="Assets/Scripts/CrossWordCreateManager.cs" Line="213" Column="10" />
+      <File FileName="Assets/Scripts/PauseManager.cs" Line="16" Column="37" />
+      <File FileName="Assets/Scripts/PlayerProfile.cs" Line="13" Column="12" />
+      <File FileName="Assets/Scripts/SaveSystem.cs" Line="15" Column="24" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Yazlab2_2-master kopyası" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="Scripts" expanded="True">
+                <Node name="GameManager.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="6070a89f-42a9-4beb-80f8-6b0de1bb27d2" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

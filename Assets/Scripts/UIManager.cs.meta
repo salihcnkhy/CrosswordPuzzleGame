@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: f624cc2623e094fb0950f6006092a618
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - latterField: {instanceID: 0}
+  - lettersField: {instanceID: 0}
+  - wordLetterField: {instanceID: 0}
+  - crossWordsField: {instanceID: 0}
+  - dragText: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

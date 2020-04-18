@@ -1,0 +1,25 @@
+﻿<Properties StartupConfiguration="{544E21B6-21C9-2EE3-154A-CAB439A33A5E}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/UIManager.cs">
+    <Files>
+      <File FileName="Assets/GameManager.cs" Line="18" Column="6" />
+      <File FileName="Assets/CrossWordCreateManager.cs" Line="9" Column="33" />
+      <File FileName="Assets/UIManager.cs" Line="33" Column="12" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Bulmaca" expanded="True" selected="True" />
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches>
+    <Watch file="../../../Assets/CrossWordCreateManager.cs" line="158" column="22" endLine="158" endColumn="31" offsetX="-1" offsetY="-1" expression="wordQueue" liveUpdate="False" />
+  </MonoDevelop.Ide.DebuggingService.PinnedWatches>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="71e0e585-d77e-4138-9aab-ab38c917e393" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

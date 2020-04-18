@@ -1,0 +1,41 @@
+﻿<Properties StartupConfiguration="{14BC4F17-8A81-2F5E-9C9E-6DF8A9564AB8}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GameManager.cs">
+    <Files>
+      <File FileName="Assets/Scripts/LevelManager.cs" Line="20" Column="39" />
+      <File FileName="Assets/Scripts/PauseManager.cs" />
+      <File FileName="Assets/Scripts/UIManager.cs" Line="33" Column="83" />
+      <File FileName="Assets/Scripts/LeaderBoardManager.cs" Line="16" Column="8" />
+      <File FileName="Assets/Scripts/GameManager.cs" Line="42" Column="31" />
+      <File FileName="Assets/Scripts/CrossWordCreateManager.cs" Line="123" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Yazlab2_2-master" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="Scripts" expanded="True">
+                <Node name="GameManager.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches>
+    <Watch file="../../../Assets/Scripts/CrossWordCreateManager.cs" line="42" column="29" endLine="42" endColumn="45" offsetX="-1" offsetY="-1" expression="addedWordStrings" liveUpdate="False" />
+    <Watch file="../../../Assets/Scripts/CrossWordCreateManager.cs" line="42" column="29" endLine="42" endColumn="45" offsetX="-1" offsetY="-1" expression="addedWordStrings" liveUpdate="False" />
+    <Watch file="../../../Assets/Scripts/CrossWordCreateManager.cs" line="42" column="29" endLine="42" endColumn="45" offsetX="-1" offsetY="-1" expression="addedWordStrings" liveUpdate="False" />
+    <Watch file="../../../Assets/Scripts/CrossWordCreateManager.cs" line="42" column="29" endLine="42" endColumn="45" offsetX="-1" offsetY="-1" expression="addedWordStrings.[0]" liveUpdate="False" />
+    <Watch file="../../../Assets/Scripts/CrossWordCreateManager.cs" line="42" column="29" endLine="42" endColumn="45" offsetX="-1" offsetY="-1" expression="addedWordStrings.[1]" liveUpdate="False" />
+  </MonoDevelop.Ide.DebuggingService.PinnedWatches>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="8912fbe5-07c3-4c08-8a95-9d7fe9044041" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
