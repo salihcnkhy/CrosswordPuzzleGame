@@ -11,10 +11,9 @@ public class UIManager : MonoBehaviour
     public GameObject wordLetterField;
 
     private GameObject lettersField;
-    private Text dragText;
+    private TMPro.TextMeshProUGUI dragText;
     private CrossWordCreateManager cwc;
     private GameObject canvas;
-    private GameObject toolBar;
     public List<GameObject> letters;
 
     private void Awake()
@@ -22,9 +21,8 @@ public class UIManager : MonoBehaviour
         letters = new List<GameObject>();
 
         canvas = transform.Find("Canvas").gameObject;
-        toolBar = canvas.transform.Find("ToolBar").gameObject;
         lettersField = transform.Find("LettersField").gameObject;
-        dragText = canvas.transform.Find("DraggedText").gameObject.GetComponent<Text>();
+        dragText = canvas.transform.Find("ShootedText").gameObject.GetComponent<TMPro.TextMeshProUGUI>();
         cwc = GetComponent<CrossWordCreateManager>();
 
     }
@@ -49,15 +47,23 @@ public class UIManager : MonoBehaviour
         dragText.text = letter;
 
     }
-    public void OnScorePoointUpdate(int scorePoint)
+    public void OnScorePointUpdate(int scorePoint)
     {
-        toolBar.transform.Find("ScoreContainer").Find("ScoreText").GetComponent<TMPro.TextMeshProUGUI>().text = scorePoint.ToString();
+        canvas.transform.Find("CurrentScoreField").Find("CurrentScoreText").GetComponent<TMPro.TextMeshProUGUI>().text = scorePoint.ToString();
 
     }
 
     public void OnCountDownUpdate(int countDown)
     {
-        toolBar.transform.Find("TimeContainer").Find("TimeText").GetComponent<TMPro.TextMeshProUGUI>().text = countDown.ToString();
+        //canvas.transform.Find("TimeContainer").Find("TimeText").GetComponent<TMPro.TextMeshProUGUI>().text = countDown.ToString();
+    }
+    public void triggerAnimation(string animation) {
+
+          foreach(var letter in letters)
+        {
+            letter.GetComponent<Animator>().SetTrigger(animation);
+        }
+
     }
 
 
@@ -83,7 +89,7 @@ public class UIManager : MonoBehaviour
         float x;
         float y;
         float z = 0f;
-        float angle = -45;
+        float angle = -50;
         words = toUpperCase(words);
         var letters = cwc.GetAllLetters(words);
 
@@ -104,10 +110,9 @@ public class UIManager : MonoBehaviour
 
             var obj = Instantiate(latterField);
 
-            obj.transform.SetParent(lettersField.transform);
             obj.transform.position = lettersField.transform.position;
 
-            obj.transform.Find("LetterField").GetComponent<TextMesh>().text = randomChars.Dequeue().ToString();
+            obj.transform.Find("LetterField").GetComponent<TMPro.TextMeshPro>().text = randomChars.Dequeue().ToString();
 
 
             x = Mathf.Sin(Mathf.Deg2Rad * angle) * (lettersField.GetComponent<SpriteRenderer>().bounds.size.x / 2f);
@@ -117,7 +122,13 @@ public class UIManager : MonoBehaviour
 
             this.letters.Add(obj);
 
-            angle += (90f / (letter.Length-1));
+            angle += (100f / (letter.Length-1));
+        }
+        var scale = Vector3.Distance(this.letters[0].transform.position, this.letters[1].transform.position);
+        scale = scale > 1 ? 1f : scale;
+        foreach(var obj in this.letters)
+        {
+            obj.transform.localScale = new Vector3(scale, scale, 1);
         }
     }
     #endregion

@@ -14,6 +14,7 @@ public class CrossWordCreateManager : MonoBehaviour
     private Queue<string> randomWordQueue;
     private int letterCountV;
     private int letterCountH;
+    private RectTransform cellsField;
 
     public List<string> create(List<string> words, GameObject letterSlot,int puzzeSize,int letterSize)
     {
@@ -21,6 +22,7 @@ public class CrossWordCreateManager : MonoBehaviour
         this.words = words;
         addedWords = new List<Word>();
         randomWordQueue = new Queue<string>();
+        cellsField = GameObject.Find("WordsField").GetComponent<RectTransform>();
         createWordsMatrix(puzzeSize,letterSize);
         createCells(letterSlot);
 
@@ -116,14 +118,14 @@ public class CrossWordCreateManager : MonoBehaviour
                 {
                     for (int i = word.startIndex.y; i < word.startIndex.y + word.word.Length; i++)
                     {
-                        letterSlotMatrix[word.startIndex.x, i].transform.Find("LetterField").GetComponent<TextMesh>().gameObject.SetActive(true);
+                        letterSlotMatrix[word.startIndex.x, i].transform.Find("LetterField").GetComponent<TMPro.TextMeshPro>().gameObject.SetActive(true);
                     }
                 }
                 else if(word.direction == Direction.Vertical)
                 {
                     for (int i = word.startIndex.x; i < word.startIndex.x + word.word.Length; i++)
                     {
-                        letterSlotMatrix[i, word.startIndex.y].transform.Find("LetterField").GetComponent<TextMesh>().gameObject.SetActive(true);
+                        letterSlotMatrix[i, word.startIndex.y].transform.Find("LetterField").GetComponent<TMPro.TextMeshPro>().gameObject.SetActive(true);
                     }
                 }
 
@@ -153,14 +155,14 @@ public class CrossWordCreateManager : MonoBehaviour
         {
             for (int j = indexesArray[1].x; j <= indexesArray[1].y; j++)
             {
-                var vec = new Vector3(((j - indexesArray[1].x)*cellSize),((i - indexesArray[0].x)*cellSize*-1)+Screen.height-(cellSize*2), 0);
+                var vec = new Vector3(((j - indexesArray[1].x)*cellSize*0.9f),((i - indexesArray[0].x)*cellSize*-0.9f)+Screen.height+cellsField.offsetMax.y, 0);
                 vec = Camera.main.ScreenToWorldPoint(vec);
                 vec.z = 0;
                 GameObject slot = Instantiate(letterSlot, vec,new Quaternion());
                
                 letterSlotMatrix[row, column] = slot;
-                slot.transform.Find("LetterField").GetComponent<TextMesh>().gameObject.SetActive(false);
-                slot.transform.Find("LetterField").GetComponent<TextMesh>().text = wordsMatrix[i,j].ToString();
+                slot.transform.Find("LetterField").GetComponent<TMPro.TextMeshPro>().gameObject.SetActive(false);
+                slot.transform.Find("LetterField").GetComponent<TMPro.TextMeshPro>().text = wordsMatrix[i,j].ToString();
                 if (wordsMatrix[i,j] == '\0')
                 {
                     letterSlotMatrix[row, column].SetActive(false);
@@ -194,11 +196,10 @@ public class CrossWordCreateManager : MonoBehaviour
                 
             }
 
-            letter.transform.localScale = new Vector3(sc.x, sc.x, 1);
+            letter.transform.localScale = new Vector3(sc.x-0.1f, sc.x-0.1f, 1);
         }
 
-        //gl.cellSize = new Vector2(cellSize, cellSize);
-        //gl.SetLayoutHorizontal();
+      
     }
 
 
@@ -276,23 +277,20 @@ public class CrossWordCreateManager : MonoBehaviour
          letterCountH = indexsArray[1].y - indexsArray[1].x + 1;
 
          letterSlotMatrix = new GameObject[letterCountV, letterCountH];
-      //  var gridRect = gl.GetComponent<RectTransform>();
 
         var cellSize = 50f;
 
+        //print(Screen.width);
 
         if (letterCountH > letterCountV)
         {
-            cellSize = ((Screen.width-50) / letterCountH);
-           // gl.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
-           // gl.constraintCount = letterCountH;
+            cellSize = (cellsField.rect.width / letterCountH);
 
         }
         else
         {
-            cellSize = (((Screen.height/2)-100) / letterCountV);
-           // gl.constraint = GridLayoutGroup.Constraint.FixedRowCount;
-           // gl.constraintCount = letterCountV;
+            cellSize = (cellsField.rect.height / letterCountV);
+         
         }
         return cellSize;
     }

@@ -58,6 +58,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    bool isLevelEnd = false;
 
     public List<string> words; // Lv içersinde ilerlerken wordsten added wordsleri çıkarman lazım
     private List<string> addedWords;
@@ -81,7 +82,7 @@ public class GameManager : MonoBehaviour
         words = ui.toUpperCase(words);
 
         OnLetterUpdate += ui.OnHittedLetterUpdate;
-        OnScorePointUpdate += ui.OnScorePoointUpdate;
+        OnScorePointUpdate += ui.OnScorePointUpdate;
         OnCountDownUpdate += ui.OnCountDownUpdate;
 
         showNewLevel();
@@ -140,61 +141,49 @@ public class GameManager : MonoBehaviour
             SaveSystem.SavePlayer(player);
 
             subLevel++;
-            showNewLevel();
+            StartCoroutine(MoveToZero());
+            StopCoroutine(StartCountDown());
             //Go to next level of mode
         }
     }
 
-    private void Update()
+    public void PressedTryButton()
     {
 
-        if (Input.GetMouseButtonDown(0))
+        if (addedWords.Contains(HittedLetter))
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
-            {
-                if (hit.collider.gameObject.name == "TryButton")
-                {
-                    if (addedWords.Contains(HittedLetter))
-                    {
-                        float timeFactor = (CountDown / maxCountDown) + 1;
-                        float score = 10*HittedLetter.Length * timeFactor - 5*misstakeCount;
-                        ScorePoint += Convert.ToInt32(score);
-                        CountDown = maxCountDown;
-                        misstakeCount = 0;
-                        ui.openWord(HittedLetter);
-                        addedWords.Remove(HittedLetter);
-                        checkIsLevelOver();
-                        HittedLetter = "";
-                    }
-                    else
-                    {
-                        // Screen Shake && Red Border ll show 
-                        HittedLetter = "";
-                        misstakeCount++;
-                    }
-                    foreach (var bul in bullets)
-                    {
-                        Destroy(bul);
-                    }
-                }
-                else if (hit.collider.gameObject.name == "ResetButton")
-                {
-                    foreach (var bul in bullets)
-                    {
-                        Destroy(bul);
-                    }
-                }
-
-            }
+            float timeFactor = (CountDown / maxCountDown) + 1;
+            float score = 10 * HittedLetter.Length * timeFactor - 5 * misstakeCount;
+            ScorePoint += Convert.ToInt32(score);
+            CountDown = maxCountDown;
+            misstakeCount = 0;
+            ui.openWord(HittedLetter);
+            addedWords.Remove(HittedLetter);
+            checkIsLevelOver();
+            HittedLetter = "";
         }
-       
+        else
+        {
+            ui.triggerAnimation("Uncorrect");
+            // Screen Shake && Red Border ll show 
+            HittedLetter = "";
+            misstakeCount++;
+        }
+        foreach (var bul in bullets)
+        {
+            Destroy(bul);
+        }
     }
 
+    public void PressedRandomizeButton()
+    {
+        foreach (var bul in bullets)
+        {
+            Destroy(bul);
+        }
+    }
 
-
+  
     public void OnLetterHit(GameObject bullet,GameObject hitted)
     {
         var bulletRb = bullet.GetComponent<Rigidbody2D>();
@@ -202,8 +191,8 @@ public class GameManager : MonoBehaviour
         Destroy(bulletRb);
         bullet.transform.SetParent(hitted.transform);
         bullets.Add(bullet);
-        print(hitted.transform.Find("LetterField").GetComponent<TextMesh>().text);
-        HittedLetter += hitted.transform.Find("LetterField").GetComponent<TextMesh>().text;
+        print(hitted.transform.Find("LetterField").GetComponent<TMPro.TextMeshPro>().text);
+        HittedLetter += hitted.transform.Find("LetterField").GetComponent<TMPro.TextMeshPro>().text;
         
     }
 
@@ -219,5 +208,32 @@ public class GameManager : MonoBehaviour
 
     }
 
+    IEnumerator MoveToZero()
+    {
+        // This looks unsafe, but Unity uses
+        // en epsilon when comparing vectors.
+        var destination = new Vector3(0, 0, 0);
+
+        foreach(var letter in ui.letters)
+        {
+            var mover = letter.transform;
+
+            while (mover.position != destination)
+            {
+                mover.position = Vector3.MoveTowards(
+                    mover.position,
+                    destination,
+                    5f * Time.deltaTime);
+                // Wait a frame and move again.
+                yield return null;
+            }
+            yield return new WaitForSeconds(0.1f);
+
+
+        }
+
+        showNewLevel();
+
+    }
 
 }

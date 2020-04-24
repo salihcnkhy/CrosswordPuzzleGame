@@ -42,3 +42,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: InGame
+    uniqueID: 2628409345
+    locked: 0
+  - name: UI
+    uniqueID: 3293527161
+    locked: 0
