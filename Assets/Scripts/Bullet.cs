@@ -10,7 +10,7 @@ public class Bullet : MonoBehaviour
     #region Attributes
     public Rigidbody2D rb;
     public float speed = 15f;
-    public ParticleSystem ps;
+    public GameObject ps;
     GameManager gm;
     MainMenuManager mm;
     #endregion
@@ -39,10 +39,13 @@ public class Bullet : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
 
-        if (collision.gameObject.name == "TouchableLetterField(Clone)")
+        if (collision.gameObject.name == "ShootableLetter(Clone)")
         {
             if (OnLetterHitEvent != null)
             {
+                var vec = transform.position;
+                Destroy(Instantiate(ps, vec,new Quaternion()), 1);
+              
                 GetComponent<CircleCollider2D>().isTrigger = false;
                 OnLetterHitEvent.Invoke(gameObject, collision.gameObject);
                 OnLetterHitEvent -= gm.OnLetterHit;

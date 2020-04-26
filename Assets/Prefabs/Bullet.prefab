@@ -118,7 +118,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 6832351613335456836}
   speed: 18
-  ps: {fileID: 2275905519072481032, guid: 57288ce3e5b7b403d95abf85b762e4c6, type: 3}
+  ps: {fileID: 2275905519072481034, guid: 57288ce3e5b7b403d95abf85b762e4c6, type: 3}
 --- !u!58 &1606241946008933653
 CircleCollider2D:
   m_ObjectHideFlags: 0

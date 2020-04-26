@@ -22,20 +22,23 @@ public class LeaderBoardManager : MonoBehaviour
 
         int[] scores = new int[6];
         var modeText = transform.Find("ModeText").GetComponent<TMPro.TextMeshProUGUI>();
-        if(scrollCount%3 == 0)
+        if(scrollCount%3 == 0 )
         {
             modeText.text = "Easy";
             scores = profile.easy;
-        }else if(scrollCount%3 == 1)
+            scrollCount = 0;
+        }else if(scrollCount == 1 || scrollCount == -2)
         {
             modeText.text = "Medium";
 
             scores = profile.medium;
-        }else if(scrollCount%3 == 2)
+            scrollCount = 1;
+        }else if(scrollCount == 2 || scrollCount == -1)
         {
             modeText.text = "Hard";
 
             scores = profile.hard;
+            scrollCount = 2;
         }
 
         for (int i = 0; i < scores.Length; i++)
