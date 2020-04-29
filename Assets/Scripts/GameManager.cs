@@ -70,8 +70,64 @@ public class GameManager : MonoBehaviour
     public delegate void OnLetterUpdateDelegate(string lastHitted);
     public delegate void OnCountDownUpdateDelegate(int countDown);
     public delegate void OnScorePointUpdateDelegate(int scorePoint);
+        [Serializable]
+    public class Word
+    {
+        public List<Easy> easy;
 
+        public List<Medium> medium;
 
+        public List<Hard> hard;
+    }
+    [Serializable]
+    public class Easy
+    {
+
+        public List<string> level0;
+
+        public List<string> level1;
+
+        public List<string> level2;
+
+        public List<string> level3;
+
+        public List<string> level4; 
+
+        public List<string> level5; 
+    }
+    [Serializable]
+    public class Medium
+    {
+
+        public List<string> level0;
+
+        public List<string> level1;
+
+        public List<string> level2;
+
+        public List<string> level3;
+
+        public List<string> level4;
+
+        public List<string> level5;
+    }
+    [Serializable]
+    public class Hard
+    {
+
+        public List<string> level0;
+
+        public List<string> level1;
+
+        public List<string> level2; 
+
+        public List<string> level3; 
+
+        public List<string> level4; 
+
+        public List<string> level5;
+    }
+    
     private void Start()
     {
         difficulty = PlayerPrefs.GetInt("difficulty");
@@ -86,14 +142,108 @@ public class GameManager : MonoBehaviour
         showNewLevel();
         StartCoroutine(StartCountDown());
     }
+    
+    public List<string> GetlevelWords(int diffucult, int subLevel)
+    {
+        List<string> ListWords = null;
+
+        using (StreamReader read = new StreamReader("C:\\Users\\Ege\\source\\repos\\JsonSerialize\\JsonSerialize\\words.json"))
+        {
+            string json = read.ReadToEnd();
+            Word word = JsonUtility.FromJson<Word>(json);
+
+            if (difficulty == 0)
+            {
+                switch (subLevel)
+                {
+                    case 0:
+                        ListWords = word.easy[0].level0;
+                        break;
+                    case 1:
+                        ListWords = word.easy[0].level1;
+                        break;
+                    case 2:
+                        ListWords = word.easy[0].level2;
+                        break;
+                    case 3:
+                        ListWords = word.easy[0].level3;
+                        break;
+                    case 4:
+                        ListWords = word.easy[0].level4;
+                        break;
+                    case 5:
+                        ListWords = word.easy[0].level5;
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+            else if (difficulty == 1)
+            {
+
+                switch (subLevel)
+                {
+                    case 0:
+                        ListWords = word.medium[0].level0;
+                        break;
+                    case 1:
+                        ListWords = word.medium[0].level1;
+                        break;
+                    case 2:
+                        ListWords = word.medium[0].level2;
+                        break;
+                    case 3:
+                        ListWords = word.medium[0].level3;
+                        break;
+                    case 4:
+                        ListWords = word.medium[0].level4;
+                        break;
+                    case 5:
+                        ListWords = word.medium[0].level5;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else if (difficulty == 2)
+            {
+
+                switch (subLevel)
+                {
+                    case 0:
+                        ListWords = word.hard[0].level0;
+                        break;
+                    case 1:
+                        ListWords = word.hard[0].level1;
+                        break;
+                    case 2:
+                        ListWords = word.hard[0].level2;
+                        break;
+                    case 3:
+                        ListWords = word.hard[0].level3;
+                        break;
+                    case 4:
+                        ListWords = word.hard[0].level4;
+                        break;
+                    case 5:
+                        ListWords = word.hard[0].level5;
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+        }
+
+        return ListWords;
+    }
 
     private void showNewLevel()
     {
-
-
         // TODO: burada eşitleme işini yap
         // subLevel değişkeni 1 den başlıyor !!
-        // LevelWords = StaticClass.GetlevelWords(difficulty , subLevel-1);
+        LevelWords = GetlevelWords(difficulty , subLevel-1);
 
         puzzleSize = subLevel < 4 ? subLevel + 2 : 6;
 
