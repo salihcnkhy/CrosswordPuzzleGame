@@ -1,15 +1,15 @@
 ﻿<Properties StartupConfiguration="{14BC4F17-8A81-2F5E-9C9E-6DF8A9564AB8}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/UIManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GameManager.cs">
     <Files>
       <File FileName="Assets/Scripts/LevelManager.cs" Line="51" Column="28" />
-      <File FileName="Assets/Scripts/PauseManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/LeaderBoardManager.cs" Line="29" Column="29" />
-      <File FileName="Assets/Scripts/GameManager.cs" />
-      <File FileName="Assets/Scripts/UIManager.cs" Line="128" Column="40" />
-      <File FileName="Assets/Scripts/CrossWordCreateManager.cs" Line="158" Column="154" />
+      <File FileName="Assets/Scripts/PauseManager.cs" />
+      <File FileName="Assets/Scripts/LeaderBoardManager.cs" />
+      <File FileName="Assets/Scripts/GameManager.cs" Line="99" Column="1" />
+      <File FileName="Assets/Scripts/UIManager.cs" />
+      <File FileName="Assets/Scripts/CrossWordCreateManager.cs" />
       <File FileName="Assets/Scripts/Bullet.cs" />
-      <File FileName="Assets/Scripts/CanonManager.cs" Line="20" Column="18" />
-      <File FileName="Assets/Scripts/MainMenuManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/CanonManager.cs" />
+      <File FileName="Assets/Scripts/MainMenuManager.cs" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -17,7 +17,7 @@
           <Node name="Yazlab2_2-master" expanded="True">
             <Node name="Assets" expanded="True">
               <Node name="Scripts" expanded="True">
-                <Node name="UIManager.cs" selected="True" />
+                <Node name="GameManager.cs" selected="True" />
               </Node>
             </Node>
           </Node>
@@ -29,7 +29,7 @@
     <Watch file="../../../Assets/Scripts/CrossWordCreateManager.cs" line="44" column="16" endLine="44" endColumn="32" offsetX="-1" offsetY="-1" expression="addedWordStrings" liveUpdate="False" />
   </MonoDevelop.Ide.DebuggingService.PinnedWatches>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="f9e02219-e901-4375-9065-54be7591e272" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="69f6cfbe-35d4-4a9e-9dab-949092ebbc8b" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

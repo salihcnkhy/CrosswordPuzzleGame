@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
 
     bool isLevelEnd = false;
 
-    public List<string> words; // Lv içersinde ilerlerken wordsten added wordsleri çıkarman lazım
+    public List<string> LevelWords; // TODO: static classtaki fonksiyona eşitleyeceğin kelimeler bunlar
     private List<string> addedWords;
     public event OnLetterUpdateDelegate OnLetterUpdate;
     public event OnCountDownUpdateDelegate OnCountDownUpdate;
@@ -79,8 +79,6 @@ public class GameManager : MonoBehaviour
 
         ui = GameObject.Find("UI").GetComponent<UIManager>();
 
-        words = ui.toUpperCase(words);
-
         OnLetterUpdate += ui.OnHittedLetterUpdate;
         OnScorePointUpdate += ui.OnScorePointUpdate;
         OnCountDownUpdate += ui.OnCountDownUpdate;
@@ -91,8 +89,16 @@ public class GameManager : MonoBehaviour
 
     private void showNewLevel()
     {
+
+
+        // TODO: burada eşitleme işini yap
+        // subLevel değişkeni 1 den başlıyor !!
+        // LevelWords = StaticClass.GetlevelWords(difficulty , subLevel-1);
+
         puzzleSize = subLevel < 4 ? subLevel + 2 : 6;
-        addedWords = ui.Create(words, puzzleSize, letterSize);
+
+        LevelWords = ui.toUpperCase(LevelWords);
+        addedWords = ui.Create(LevelWords, puzzleSize, letterSize);
         removeAddedFromWords();
         ScorePoint = 0;
         CountDown = maxCountDown;
@@ -108,7 +114,7 @@ public class GameManager : MonoBehaviour
     {
         foreach (var added in addedWords)
         {
-            words.Remove(added);
+            LevelWords.Remove(added);
         }
     }
 
