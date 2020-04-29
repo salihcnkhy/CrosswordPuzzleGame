@@ -70,7 +70,8 @@ public class GameManager : MonoBehaviour
     public delegate void OnLetterUpdateDelegate(string lastHitted);
     public delegate void OnCountDownUpdateDelegate(int countDown);
     public delegate void OnScorePointUpdateDelegate(int scorePoint);
-        [Serializable]
+    
+    [Serializable]
     public class Word
     {
         public List<Easy> easy;
@@ -146,7 +147,7 @@ public class GameManager : MonoBehaviour
     public List<string> GetlevelWords(int diffucult, int subLevel)
     {
         List<string> ListWords = null;
-
+                                                     //BU KISMI DEĞİŞTİRMEN LAZIM JSON DOSYASI NERDEYSE  !!!
         using (StreamReader read = new StreamReader("C:\\Users\\Ege\\source\\repos\\JsonSerialize\\JsonSerialize\\words.json"))
         {
             string json = read.ReadToEnd();
