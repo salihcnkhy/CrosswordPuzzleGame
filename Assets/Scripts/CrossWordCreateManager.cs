@@ -81,6 +81,9 @@ public class CrossWordCreateManager : MonoBehaviour
                         break;
                     }
                 }
+
+
+
                 }
                
         }
@@ -147,7 +150,7 @@ public class CrossWordCreateManager : MonoBehaviour
         var indexesArray = getStartPoints();
         updateAddedWordsIndex(new Vector2Int(indexesArray[0].x, indexesArray[1].x));
         var cellSize = calculateCellSize(indexesArray);
-
+        print(cellSize);
         int row = 0;
         int column = 0;
 
@@ -155,8 +158,9 @@ public class CrossWordCreateManager : MonoBehaviour
         {
             for (int j = indexesArray[1].x; j <= indexesArray[1].y; j++)
             {
-                var vec = new Vector3(((j - indexesArray[1].x)*cellSize*0.9f),((i - indexesArray[0].x)*cellSize*-0.9f)+Screen.height+cellsField.offsetMax.y, 0);
+                var vec = new Vector3(((j - indexesArray[1].x)*cellSize*0.9f),((i - indexesArray[0].x)*cellSize*-0.9f)+cellsField.position.y, 0);
                 vec = Camera.main.ScreenToWorldPoint(vec);
+                print(cellsField.offsetMax.y);
                 vec.z = 0;
                 GameObject slot = Instantiate(letterSlot, vec,new Quaternion());
                
@@ -280,8 +284,8 @@ public class CrossWordCreateManager : MonoBehaviour
 
         var cellSize = 50f;
 
-        //print(Screen.width);
-
+        print(Screen.width);
+        print(cellsField.rect.width);
         if (letterCountH > letterCountV)
         {
             cellSize = (cellsField.rect.width / letterCountH);
@@ -292,7 +296,7 @@ public class CrossWordCreateManager : MonoBehaviour
             cellSize = (cellsField.rect.height / letterCountV);
          
         }
-        return cellSize;
+        return cellSize > (cellsField.rect.width*0.25f) ? (cellsField.rect.width * 0.25f) : cellSize;
     }
 
 

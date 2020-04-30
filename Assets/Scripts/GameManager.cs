@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.IO;
 
 public class GameManager : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class GameManager : MonoBehaviour
 
     private int puzzleSize;
     private int letterSize;
+
 
     public string HittedLetter
     {
@@ -70,7 +72,9 @@ public class GameManager : MonoBehaviour
     public delegate void OnLetterUpdateDelegate(string lastHitted);
     public delegate void OnCountDownUpdateDelegate(int countDown);
     public delegate void OnScorePointUpdateDelegate(int scorePoint);
-    
+
+    #region JSON Serializable
+
     [Serializable]
     public class Word
     {
@@ -128,27 +132,13 @@ public class GameManager : MonoBehaviour
 
         public List<string> level5;
     }
-    
-    private void Start()
-    {
-        difficulty = PlayerPrefs.GetInt("difficulty");
-        letterSize = difficulty + 4;
 
-        ui = GameObject.Find("UI").GetComponent<UIManager>();
 
-        OnLetterUpdate += ui.OnHittedLetterUpdate;
-        OnScorePointUpdate += ui.OnScorePointUpdate;
-        OnCountDownUpdate += ui.OnCountDownUpdate;
-
-        showNewLevel();
-        StartCoroutine(StartCountDown());
-    }
-    
     public List<string> GetlevelWords(int diffucult, int subLevel)
     {
         List<string> ListWords = null;
-                                                     //BU KISMI DEĞİŞTİRMEN LAZIM JSON DOSYASI NERDEYSE  !!!
-        using (StreamReader read = new StreamReader("C:\\Users\\Ege\\source\\repos\\JsonSerialize\\JsonSerialize\\words.json"))
+        //BU KISMI DEĞİŞTİRMEN LAZIM JSON DOSYASI NERDEYSE  !!!
+        using (StreamReader read = new StreamReader("/Users/salihcnkhy/Yazlab2_2/Assets/words.json"))
         {
             string json = read.ReadToEnd();
             Word word = JsonUtility.FromJson<Word>(json);
@@ -240,25 +230,64 @@ public class GameManager : MonoBehaviour
         return ListWords;
     }
 
+    #endregion
+
+    private void Start()
+    {
+        difficulty = PlayerPrefs.GetInt("difficulty");
+        letterSize = difficulty + 4;
+
+        ui = GameObject.Find("UI").GetComponent<UIManager>();
+
+        OnLetterUpdate += ui.OnHittedLetterUpdate;
+        OnScorePointUpdate += ui.OnScorePointUpdate;
+        OnCountDownUpdate += ui.OnCountDownUpdate;
+
+        showNewLevel();
+        StartCoroutine(StartCountDown());
+    }
+
+
     private void showNewLevel()
     {
-        // TODO: burada eşitleme işini yap
-        // subLevel değişkeni 1 den başlıyor !!
+
+        var player = new Player();
+        player.load();
+
         LevelWords = GetlevelWords(difficulty , subLevel-1);
 
         puzzleSize = subLevel < 4 ? subLevel + 2 : 6;
 
         LevelWords = ui.toUpperCase(LevelWords);
-        addedWords = ui.Create(LevelWords, puzzleSize, letterSize);
-        removeAddedFromWords();
+      
         ScorePoint = 0;
         CountDown = maxCountDown;
-        foreach(var word in addedWords)
+
+        switch (difficulty)
+        {
+            case 0:
+                ui.setLeaderScoreText(player.easy[subLevel-1]);
+                break;
+            case 1:
+                ui.setLeaderScoreText(player.medium[subLevel-1]);
+
+                break;
+            case 2:
+                ui.setLeaderScoreText(player.hard[subLevel-1]);
+
+                break;
+        }
+        ui.setLevelText(subLevel);
+
+        addedWords = ui.Create(LevelWords, puzzleSize, letterSize);
+
+        removeAddedFromWords();
+
+        foreach (var word in addedWords)
         {
             print(word);
         }
-        print("Seviye : " + subLevel.ToString());
-
+   
     }
 
     private void removeAddedFromWords()
@@ -334,6 +363,7 @@ public class GameManager : MonoBehaviour
 
     public void PressedRandomizeButton()
     {
+        InGameAnimationManager.shared.StartRandomizeLetterAnimation(ui.letters);
         foreach (var bul in bullets)
         {
             Destroy(bul);

@@ -1,6 +1,2 @@
 Base path: '/Volumes/PROJE/Unity/2019.2.17f1/Unity.app/Contents', plugins path '/Volumes/PROJE/Unity/2019.2.17f1/Unity.app/Contents/PlaybackEngines'
 Cmd: initializeCompiler
-Cmd: preprocess
-  insize=6585 outsize=719 ok=1
-Cmd: preprocess
-  insize=6605 outsize=727 ok=1

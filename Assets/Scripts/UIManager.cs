@@ -35,6 +35,19 @@ public class UIManager : MonoBehaviour
         return addedWords;
     }
 
+    public void setLevelText(int level)
+    {
+        canvas.transform.Find("LevelText")
+            .GetComponent<TMPro.TextMeshProUGUI>()
+            .text = "Level " + level.ToString();
+    }
+    public void setLeaderScoreText(int maxScore)
+    {
+        canvas.transform.Find("LeaderScoreField")
+           .Find("LeaderScoreText")
+           .GetComponent<TMPro.TextMeshProUGUI>()
+           .text = maxScore.ToString();
+    }
 
    
     public void openWord(string word)
@@ -132,94 +145,5 @@ public class UIManager : MonoBehaviour
         }
     }
     #endregion
-    private void setAlpha(GameObject gm , float alpha)
-    {
-        var spriteRenderer = gm.GetComponent<SpriteRenderer>();
-        var color = spriteRenderer.color;
-        color.a = alpha;
-        spriteRenderer.color = color;
-    }
-
- /*  private void DraggingProcess()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            if (Physics.Raycast(ray, out hit, 100))
-            {
-                var gm = hit.transform.gameObject;
-                
-                var vec = gm.GetComponent<Renderer>().bounds.center;
-                vec.z = -5;
-
-                passedOnLetters.Add(gm);
-
-                var textComp = gm.transform.Find("LetterField").GetComponent<TextMesh>();
-
-                setAlpha(gm, 1f);
-
-                dragText.text += textComp.text;
-
-                lr.positionCount = passedOnLetters.Count + 1;
-
-                lr.SetPosition(passedOnLetters.Count - 1, vec);
-
-                lr.SetPosition(passedOnLetters.Count, vec);
-
-                lr.enabled = true;
-                isDragging = true;
-            }
-
-        }
-        if (isDragging)
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            var vec = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            vec.z = -5;
-            if (Physics.Raycast(ray, out hit, 100))
-            {
-                var gm = hit.transform.gameObject;
-
-                if (!passedOnLetters.Contains(gm))
-                {
-                    passedOnLetters.Add(gm);
-                    var textComp = gm.transform.Find("LetterField").GetComponent<TextMesh>();
-                    dragText.text += textComp.text;
-
-                    lr.positionCount = passedOnLetters.Count + 1;
-
-                    vec = gm.GetComponent<Renderer>().bounds.center;
-                    vec.z = -5;
-
-                    setAlpha(gm, 1f);
-                    lr.SetPosition(passedOnLetters.Count, vec);
-                }
-            }
-            else
-            {
-                lr.SetPosition(passedOnLetters.Count, vec);
-            }
-        }
-
-        if (Input.GetMouseButtonUp(0))
-        {
-            foreach(var letter in passedOnLetters)
-            {
-                setAlpha(letter, 0.1f);
-            }
-
-            if (words.Contains(dragText.text))
-            {
-                crossWordsField.GetComponent<CrossWordCreateManager>().openWordChars(dragText.text);
-            }
-
-            passedOnLetters.Clear();
-            dragText.text = "";
-            lr.positionCount = 0;
-            lr.enabled = false;
-            isDragging = false;
-        }
-    }*/
 
 }
