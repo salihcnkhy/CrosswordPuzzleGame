@@ -1,9 +1,9 @@
 ﻿<Properties StartupConfiguration="{B26D12E0-EAA5-C769-06A7-3D6E98BD0B5A}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/InGameAnimationManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GameManager.cs">
     <Files>
       <File FileName="Assets/Scripts/CrossWordCreateManager.cs" Line="225" Column="14" />
       <File FileName="Assets/Scripts/GameManager.cs" Line="251" Column="1" />
-      <File FileName="Assets/words.json" Line="1" Column="209" />
+      <File FileName="Assets/words.json" />
       <File FileName="Assets/Scripts/UIManager.cs" />
       <File FileName="Assets/Scripts/InGameAnimationManager.cs" Line="8" Column="1" />
     </Files>
@@ -13,7 +13,7 @@
           <Node name="Yazlab2_2" expanded="True">
             <Node name="Assets" expanded="True">
               <Node name="Scripts" expanded="True">
-                <Node name="InGameAnimationManager.cs" selected="True" />
+                <Node name="GameManager.cs" selected="True" />
               </Node>
             </Node>
           </Node>
@@ -25,7 +25,7 @@
     <Watch file="../../../Assets/Scripts/CrossWordCreateManager.cs" line="44" column="16" endLine="44" endColumn="32" offsetX="-1" offsetY="-1" expression="addedWordStrings" liveUpdate="False" />
   </MonoDevelop.Ide.DebuggingService.PinnedWatches>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="69f6cfbe-35d4-4a9e-9dab-949092ebbc8b" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="8bd5b00f-c009-456c-8ee5-2f1cf1afa4ae" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/Users/salihcnkhy/Yazlab2_2/Assets/Scripts/CrossWordCreateManager.cs" relfile="Assets/Scripts/CrossWordCreateManager.cs" line="77" column="1" />
