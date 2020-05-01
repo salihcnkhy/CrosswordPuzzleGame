@@ -1,13 +1,13 @@
 ﻿<Properties StartupConfiguration="{B26D12E0-EAA5-C769-06A7-3D6E98BD0B5A}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Resources/words.json">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GameManager.cs">
     <Files>
-      <File FileName="Assets/Scripts/CrossWordCreateManager.cs" Line="370" Column="1" />
-      <File FileName="Assets/Scripts/GameManager.cs" Line="156" Column="28" />
-      <File FileName="Assets/Scripts/UIManager.cs" Line="40" Column="76" />
-      <File FileName="Assets/Scripts/InGameAnimationManager.cs" Line="54" Column="6" />
-      <File FileName="Assets/Words.txt" Line="10526" Column="6" />
-      <File FileName="Assets/Scripts/LevelManager.cs" Line="5" Column="1" />
-      <File FileName="Assets/Resources/words.json" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/CrossWordCreateManager.cs" Line="129" Column="6" />
+      <File FileName="Assets/Scripts/GameManager.cs" Line="143" Column="34" />
+      <File FileName="Assets/Scripts/UIManager.cs" />
+      <File FileName="Assets/Scripts/InGameAnimationManager.cs" />
+      <File FileName="Assets/Words.txt" />
+      <File FileName="Assets/Scripts/LevelManager.cs" />
+      <File FileName="Assets/Resources/words.json" Line="22" Column="14" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -27,15 +27,12 @@
     <Watch file="../../../Assets/Scripts/CrossWordCreateManager.cs" line="44" column="16" endLine="44" endColumn="32" offsetX="-1" offsetY="-1" expression="addedWordStrings" liveUpdate="False" />
   </MonoDevelop.Ide.DebuggingService.PinnedWatches>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="8bd5b00f-c009-456c-8ee5-2f1cf1afa4ae" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="b86eb322-5d14-4c5d-b430-258e56cdc184" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/Users/salihcnkhy/Yazlab2_2/Assets/Scripts/GameManager.cs" relfile="Assets/Scripts/GameManager.cs" line="345" column="1" />
-      <Breakpoint file="/Users/salihcnkhy/Yazlab2_2/Assets/Scripts/CrossWordCreateManager.cs" relfile="Assets/Scripts/CrossWordCreateManager.cs" line="143" column="1" />
-      <Breakpoint file="/Users/salihcnkhy/Yazlab2_2/Assets/Scripts/CrossWordCreateManager.cs" relfile="Assets/Scripts/CrossWordCreateManager.cs" line="138" column="1" />
-      <Breakpoint file="/Users/salihcnkhy/Yazlab2_2/Assets/Scripts/CrossWordCreateManager.cs" relfile="Assets/Scripts/CrossWordCreateManager.cs" line="211" column="1" />
-      <Breakpoint file="/Users/salihcnkhy/Yazlab2_2/Assets/Scripts/CrossWordCreateManager.cs" relfile="Assets/Scripts/CrossWordCreateManager.cs" line="210" column="1" />
-      <Breakpoint file="/Users/salihcnkhy/Yazlab2_2/Assets/Scripts/CrossWordCreateManager.cs" relfile="Assets/Scripts/CrossWordCreateManager.cs" line="513" column="1" />
+      <Breakpoint file="/Users/salihcnkhy/Yazlab2_2/Assets/Scripts/CrossWordCreateManager.cs" relfile="Assets/Scripts/CrossWordCreateManager.cs" line="136" column="1" />
+      <Breakpoint file="/Users/salihcnkhy/Yazlab2_2/Assets/Scripts/CrossWordCreateManager.cs" relfile="Assets/Scripts/CrossWordCreateManager.cs" line="131" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />

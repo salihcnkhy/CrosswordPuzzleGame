@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -94,7 +95,7 @@ public class UIManager : MonoBehaviour
         List<string> capitalWords = new List<string>();
         for (int i = 0; i < words.Count; i++)
         {
-            capitalWords.Add(words[i].ToUpper());
+            capitalWords.Add(words[i].ToUpper(new CultureInfo("tr-TR", false)));
         }
         return capitalWords;
     }

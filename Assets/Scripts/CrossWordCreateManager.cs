@@ -108,14 +108,7 @@ public class CrossWordCreateManager : MonoBehaviour
             wordsMatrix = new char[rowCount, rowCount];
 
             randomWordQueue = getRandomQueueFromList(words);
-              /*  while (randomWordQueue.Count != words.Count)
-                {
-                    int random = UnityEngine.Random.Range(0, words.Count);
-                    if (!randomWordQueue.Contains(words[random]))
-                    {
-                        randomWordQueue.Enqueue(words[random]);
-                    }
-                }*/
+              
                 while (randomWordQueue.Count != 0)
                 {
                 

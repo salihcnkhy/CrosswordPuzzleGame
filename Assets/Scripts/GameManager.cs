@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using System.IO;
-using System.Linq;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -290,7 +288,7 @@ public class GameManager : MonoBehaviour
 
         puzzleSize = subLevel < 4 ? subLevel + 2 : 6;
 
-        //LevelWords = ui.toUpperCase(LevelWords);
+        LevelWords = ui.toUpperCase(LevelWords);
 
         ScorePoint = 0;
 
@@ -467,12 +465,13 @@ public class GameManager : MonoBehaviour
         }
         foreach (var bul in bullets)
         {
-            bul.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, -2));
+            Destroy(bul);
         }
     }
 
     public void PressedRandomizeButton()
     {
+        HittedLetter = "";
         InGameAnimationManager.shared.StartRandomizeLetterAnimation(ui.letters);
         foreach (var bul in bullets)
         {
