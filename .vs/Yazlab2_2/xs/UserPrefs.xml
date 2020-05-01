@@ -1,11 +1,13 @@
 ﻿<Properties StartupConfiguration="{B26D12E0-EAA5-C769-06A7-3D6E98BD0B5A}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GameManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Resources/words.json">
     <Files>
-      <File FileName="Assets/Scripts/CrossWordCreateManager.cs" Line="225" Column="14" />
-      <File FileName="Assets/Scripts/GameManager.cs" Line="251" Column="1" />
-      <File FileName="Assets/words.json" />
-      <File FileName="Assets/Scripts/UIManager.cs" />
-      <File FileName="Assets/Scripts/InGameAnimationManager.cs" Line="8" Column="1" />
+      <File FileName="Assets/Scripts/CrossWordCreateManager.cs" Line="370" Column="1" />
+      <File FileName="Assets/Scripts/GameManager.cs" Line="156" Column="28" />
+      <File FileName="Assets/Scripts/UIManager.cs" Line="40" Column="76" />
+      <File FileName="Assets/Scripts/InGameAnimationManager.cs" Line="54" Column="6" />
+      <File FileName="Assets/Words.txt" Line="10526" Column="6" />
+      <File FileName="Assets/Scripts/LevelManager.cs" Line="5" Column="1" />
+      <File FileName="Assets/Resources/words.json" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -28,7 +30,12 @@
   <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="8bd5b00f-c009-456c-8ee5-2f1cf1afa4ae" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/Users/salihcnkhy/Yazlab2_2/Assets/Scripts/CrossWordCreateManager.cs" relfile="Assets/Scripts/CrossWordCreateManager.cs" line="77" column="1" />
+      <Breakpoint file="/Users/salihcnkhy/Yazlab2_2/Assets/Scripts/GameManager.cs" relfile="Assets/Scripts/GameManager.cs" line="345" column="1" />
+      <Breakpoint file="/Users/salihcnkhy/Yazlab2_2/Assets/Scripts/CrossWordCreateManager.cs" relfile="Assets/Scripts/CrossWordCreateManager.cs" line="143" column="1" />
+      <Breakpoint file="/Users/salihcnkhy/Yazlab2_2/Assets/Scripts/CrossWordCreateManager.cs" relfile="Assets/Scripts/CrossWordCreateManager.cs" line="138" column="1" />
+      <Breakpoint file="/Users/salihcnkhy/Yazlab2_2/Assets/Scripts/CrossWordCreateManager.cs" relfile="Assets/Scripts/CrossWordCreateManager.cs" line="211" column="1" />
+      <Breakpoint file="/Users/salihcnkhy/Yazlab2_2/Assets/Scripts/CrossWordCreateManager.cs" relfile="Assets/Scripts/CrossWordCreateManager.cs" line="210" column="1" />
+      <Breakpoint file="/Users/salihcnkhy/Yazlab2_2/Assets/Scripts/CrossWordCreateManager.cs" relfile="Assets/Scripts/CrossWordCreateManager.cs" line="513" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />

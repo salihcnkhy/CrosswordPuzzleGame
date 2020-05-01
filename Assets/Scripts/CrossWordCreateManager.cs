@@ -15,7 +15,7 @@ public class CrossWordCreateManager : MonoBehaviour
     private int letterCountV;
     private int letterCountH;
     private RectTransform cellsField;
-
+    private int rowCount = 75;
     public List<string> create(List<string> words, GameObject letterSlot,int puzzeSize,int letterSize)
     {
 
@@ -36,32 +36,110 @@ public class CrossWordCreateManager : MonoBehaviour
         return addedWordStrings;
 
     }
+    public List<string> createWordList(List<string> words, int puzzeSize, int letterSize)
+    {
+
+        this.words = words;
+        addedWords = new List<Word>();
+        randomWordQueue = new Queue<string>();
+        cellsField = GameObject.Find("WordsField").GetComponent<RectTransform>();
+        createWordsMatrix(puzzeSize, letterSize);
+      
+        var addedWordStrings = new List<string>();
+
+        foreach (var word in addedWords)
+        {
+            addedWordStrings.Add(word.word);
+
+        }
+        return addedWordStrings;
+
+    }
+    private Queue<T> getRandomQueueFromList<T>(List<T> list)
+    {
+        Queue<T> queue = new Queue<T>();
+        for(int i = 0; i<list.Count/2; i++)
+        {
+            int random = UnityEngine.Random.Range(0, list.Count);
+            while (random == i)
+            {
+                random = UnityEngine.Random.Range(0, list.Count);
+            }
+
+            var temp = list[random];
+            list[random] = list[i];
+            list[i] = temp;
+            
+        }
+        foreach(var item in list)
+        {
+            queue.Enqueue(item);
+        }
+        return queue;
+
+    }
+    private bool checkLetters(string e , string addedWordString)
+    {
+        for (int i = 0; i < addedWordString.Length; i++)
+        {
+            if (!e.Contains(addedWordString[i]))
+            {
+                return false;
+            }
+                
+        }
+
+        return true;
+    }
 
     private void createWordsMatrix(int puzzleSize,int letterSize)
     {       
              List<string> addedWordStrings = new List<string>();
-
              bool isFound = false;
-            while (!isFound)
+        if (letterSize < 6)
+        {
+            words = words.FindAll(e => e.Length <= letterSize);
+
+        }
+        while (!isFound)
             {
-                addedWordStrings.Clear();
-                randomWordQueue.Clear();
-                addedWords.Clear();
-                wordsMatrix = new char[32, 32];
-                while (randomWordQueue.Count != words.Count)
+            addedWordStrings.Clear();
+            addedWords.Clear();
+            wordsMatrix = new char[rowCount, rowCount];
+
+            randomWordQueue = getRandomQueueFromList(words);
+              /*  while (randomWordQueue.Count != words.Count)
                 {
                     int random = UnityEngine.Random.Range(0, words.Count);
                     if (!randomWordQueue.Contains(words[random]))
                     {
                         randomWordQueue.Enqueue(words[random]);
                     }
-                }
+                }*/
                 while (randomWordQueue.Count != 0)
                 {
+                
                     setWordPlace();
                 if (!addedWordStrings.Contains(addedWords[addedWords.Count - 1].word))
                 {
                     addedWordStrings.Add(addedWords[addedWords.Count - 1].word);
+                    var allLetters = GetAllLetters(addedWordStrings);
+                    var tempWords = words.FindAll(delegate(string e){
+                            return checkLetters(e, allLetters);
+                        });
+
+                    foreach(var word in addedWordStrings)
+                    {
+                        tempWords.Remove(word);
+                    }
+
+                    if(tempWords.Count+addedWordStrings.Count < puzzleSize)
+                    {
+                        break;
+                    }
+
+                    randomWordQueue = getRandomQueueFromList(tempWords);
+
                 }
                 if(letterSize == 6)
                 {
@@ -70,6 +148,12 @@ public class CrossWordCreateManager : MonoBehaviour
 
                         isFound = true;
                         break;
+                    }  else if (GetAllLetters(addedWordStrings).Length > 12)
+                    {
+                        addedWordStrings.Clear();
+                        addedWords.Clear();
+                        wordsMatrix = new char[rowCount, rowCount];
+
                     }
                 }
                 else if (letterSize < 6)
@@ -79,17 +163,19 @@ public class CrossWordCreateManager : MonoBehaviour
 
                         isFound = true;
                         break;
+                    }else if(GetAllLetters(addedWordStrings).Length > letterSize)
+                    {
+                        addedWordStrings.Clear();
+                        addedWords.Clear();
+                        wordsMatrix = new char[rowCount, rowCount];
+
                     }
                 }
-
-
 
                 }
                
         }
            
-        
-
       
     }
 
@@ -150,7 +236,6 @@ public class CrossWordCreateManager : MonoBehaviour
         var indexesArray = getStartPoints();
         updateAddedWordsIndex(new Vector2Int(indexesArray[0].x, indexesArray[1].x));
         var cellSize = calculateCellSize(indexesArray);
-        print(cellSize);
         int row = 0;
         int column = 0;
 
@@ -160,7 +245,6 @@ public class CrossWordCreateManager : MonoBehaviour
             {
                 var vec = new Vector3(((j - indexesArray[1].x)*cellSize*0.9f),((i - indexesArray[0].x)*cellSize*-0.9f)+cellsField.position.y, 0);
                 vec = Camera.main.ScreenToWorldPoint(vec);
-                print(cellsField.offsetMax.y);
                 vec.z = 0;
                 GameObject slot = Instantiate(letterSlot, vec,new Quaternion());
                
@@ -239,9 +323,9 @@ public class CrossWordCreateManager : MonoBehaviour
         int lastColumnIndex = -1;
 
 
-        for (int i = 0; i < 32; i++)
+        for (int i = 0; i < rowCount; i++)
         {
-            for (int j = 0; j < 32; j++)
+            for (int j = 0; j < rowCount; j++)
             {
                 if (wordsMatrix[i, j] != '\0')
                 {
@@ -284,8 +368,6 @@ public class CrossWordCreateManager : MonoBehaviour
 
         var cellSize = 50f;
 
-        print(Screen.width);
-        print(cellsField.rect.width);
         if (letterCountH > letterCountV)
         {
             cellSize = (cellsField.rect.width / letterCountH);
@@ -304,16 +386,16 @@ public class CrossWordCreateManager : MonoBehaviour
     {
         string word = randomWordQueue.Dequeue();
         char[] randomWord = word.ToCharArray();
-        if (randomWordQueue.Count + 1 == words.Count)
+        if (addedWords.Count == 0)
         {
-            int start = (32 - randomWord.Length) / 2;
+            int start = (rowCount - randomWord.Length) / 2;
             int count = 0;
             for (int i = start; i < start + randomWord.Length; i++)
             {
-                wordsMatrix[15, i] = randomWord[count];
+                wordsMatrix[rowCount/2, i] = randomWord[count];
                 count++;
             }
-            addedWords.Add(new Word(word,new Vector2Int(15,start),Direction.Horizontal));
+            addedWords.Add(new Word(word,new Vector2Int(rowCount/2,start),Direction.Horizontal));
         }
         else
         {
@@ -345,7 +427,6 @@ public class CrossWordCreateManager : MonoBehaviour
 
                     foreach (var index in indexVectors)
                     {
-
                         var direction = whichDirection(index);
                         isAdded = addWordIfCan(word, index, direction);
                         if (isAdded)
@@ -364,10 +445,10 @@ public class CrossWordCreateManager : MonoBehaviour
     private char[,] cloneWordMatrix()
     {
 
-        char[,] temp = new char[32, 32];
-        for (int i = 0; i < 32; i++)
+        char[,] temp = new char[rowCount, rowCount];
+        for (int i = 0; i < rowCount; i++)
         {
-            for (int j = 0; j < 32; j++)
+            for (int j = 0; j < rowCount; j++)
             {
                 temp[i, j] = wordsMatrix[i, j];
             }
@@ -444,9 +525,11 @@ public class CrossWordCreateManager : MonoBehaviour
         else if (direction == Direction.Vertical)
         {
             int start = indexVector.x - offset;
+          
             int count = 0;
             for (int i = start; i < word.Length + start; i++)
             {
+                
                 if (indexVector.x == i)
                 {
                     count++;
@@ -496,9 +579,9 @@ public class CrossWordCreateManager : MonoBehaviour
     {
 
         var temp = new Queue<Vector2Int>();
-        for (int i = 0; i < 32; i++)
+        for (int i = 0; i < rowCount; i++)
         {
-            for (int j = 0; j < 32; j++)
+            for (int j = 0; j < rowCount; j++)
             {
                 if (wordsMatrix[i, j] != '\0')
 

@@ -1,0 +1,108 @@
+Zorluk : 0 Seviye : 1
+lapa
+plak
+kalp
+Zorluk : 0 Seviye : 2
+ışık
+akış
+şakı
+aşık
+Zorluk : 0 Seviye : 3
+epik
+pike
+peki
+ipek
+ekip
+Zorluk : 0 Seviye : 4
+ta
+atak
+takı
+atkı
+kıta
+tıka
+Zorluk : 0 Seviye : 5
+in
+kin
+iken
+enik
+ekin
+inek
+Zorluk : 0 Seviye : 6
+em
+elem
+emel
+alem
+elma
+meal
+Zorluk : 1 Seviye : 1
+aşk
+kaşık
+kaşın
+Zorluk : 1 Seviye : 2
+çakır
+çarık
+çırak
+çıkar
+Zorluk : 1 Seviye : 3
+yıkık
+yakı
+yıka
+yankı
+yıkan
+Zorluk : 1 Seviye : 4
+ela
+atlet
+tela
+alet
+talep
+palet
+Zorluk : 1 Seviye : 5
+kel
+leke
+ilkel
+işlek
+klişe
+şekil
+Zorluk : 1 Seviye : 6
+alçal
+çalı
+açıl
+alçı
+çakıl
+açlık
+Zorluk : 2 Seviye : 1
+köleleş
+köyleş
+köyleşmek
+Zorluk : 2 Seviye : 2
+yakalamak
+yaslanmak
+selamünaleyküm
+telekomünikasyon
+Zorluk : 2 Seviye : 3
+tişört
+özerkleştir
+özelleştirmek
+özerkleştirmek
+ölümsüzleştirmek
+Zorluk : 2 Seviye : 4
+kakala
+çakal
+açıkla
+saçılmak
+saçmalık
+sonuçlandırmak
+Zorluk : 2 Seviye : 5
+oyala
+oylamak
+yollamak
+oylanmak
+onaylamak
+yoğunlaşmak
+Zorluk : 2 Seviye : 6
+almak
+sıralamak
+ısmarlamak
+maskaralık
+sırsıklam
+saldırmak

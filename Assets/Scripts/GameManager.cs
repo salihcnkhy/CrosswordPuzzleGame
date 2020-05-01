@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.IO;
+using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,7 +16,7 @@ public class GameManager : MonoBehaviour
     private int misstakeCount = 0;
     private int scorePoint = 0;
     private List<GameObject> bullets = new List<GameObject>();
-    private int subLevel = 1;
+    private int subLevel = 0;
     private int difficulty;
 
     private int puzzleSize;
@@ -59,6 +61,8 @@ public class GameManager : MonoBehaviour
 
         }
     }
+
+    private Player Player;
 
     bool isLevelEnd = false;
 
@@ -137,10 +141,12 @@ public class GameManager : MonoBehaviour
     public List<string> GetlevelWords(int diffucult, int subLevel)
     {
         List<string> ListWords = null;
-        //BU KISMI DEĞİŞTİRMEN LAZIM JSON DOSYASI NERDEYSE  !!!
-        using (StreamReader read = new StreamReader("/Users/salihcnkhy/Yazlab2_2/Assets/words.json"))
-        {
-            string json = read.ReadToEnd();
+
+        TextAsset jsonAsset = Resources.Load<TextAsset>("words");
+
+         
+         string json = jsonAsset.text;
+
             Word word = JsonUtility.FromJson<Word>(json);
 
             if (difficulty == 0)
@@ -225,7 +231,7 @@ public class GameManager : MonoBehaviour
                 }
             }
 
-        }
+        
 
         return ListWords;
     }
@@ -243,10 +249,110 @@ public class GameManager : MonoBehaviour
         OnScorePointUpdate += ui.OnScorePointUpdate;
         OnCountDownUpdate += ui.OnCountDownUpdate;
 
-        showNewLevel();
-        StartCoroutine(StartCountDown());
+        Player = new Player();
+        Player.load();
+
+        StartCoroutine(ShowLevel(0));
     }
 
+    public void StartShowingLevel(int cmd)
+    {
+        StartCoroutine(ShowLevel(cmd));
+    }
+
+
+
+    private IEnumerator ShowLevel(int cmd)
+    {
+        if(cmd == 3)
+        {
+            GameObject.Find("UI").transform.Find("Canvas").GetComponent<Animator>().SetTrigger("RemovePausePanel");
+
+        }
+        else if(cmd == 1 || cmd == 2)
+        {
+            GameObject.Find("UI").transform.Find("Canvas").GetComponent<Animator>().SetTrigger("RemoveLevelPassedPanel");
+
+            if(cmd==1)
+            saveDataFromLastLevel();
+
+
+        }
+        yield return new WaitForSeconds(1);
+
+        if (cmd == 0 || cmd == 1)
+        {
+            subLevel++;
+        }
+             
+
+        LevelWords = GetlevelWords(difficulty, subLevel - 1);
+
+        puzzleSize = subLevel < 4 ? subLevel + 2 : 6;
+
+        //LevelWords = ui.toUpperCase(LevelWords);
+
+        ScorePoint = 0;
+
+        switch (difficulty)
+        {
+            case 0:
+                ui.setLeaderScoreText(Player.easy[subLevel - 1]);
+                break;
+            case 1:
+                ui.setLeaderScoreText(Player.medium[subLevel - 1]);
+
+                break;
+            case 2:
+                ui.setLeaderScoreText(Player.hard[subLevel - 1]);
+
+                break;
+        }
+        ui.setLevelText(subLevel);
+
+        addedWords = ui.Create(LevelWords, puzzleSize, letterSize);
+
+        removeAddedFromWords();
+
+        foreach (var word in addedWords)
+        {
+            print(word);
+        }
+
+    }
+
+    private void saveDataFromLastLevel()
+    {
+       
+
+        var lastMaxScore = 0;
+        switch (difficulty)
+        {
+            case 0:
+                lastMaxScore = Player.easy[subLevel-1];
+                Player.easy[subLevel-1] = lastMaxScore < ScorePoint ? ScorePoint : lastMaxScore;
+                break;
+            case 1:
+                lastMaxScore = Player.medium[subLevel-1];
+                Player.medium[subLevel-1] = lastMaxScore < ScorePoint ? ScorePoint : lastMaxScore;
+                break;
+            case 2:
+                lastMaxScore = Player.hard[subLevel-1];
+                Player.hard[subLevel-1] = lastMaxScore < ScorePoint ? ScorePoint : lastMaxScore;
+                break;
+
+        }
+
+     
+        SaveSystem.SavePlayer(Player);
+    }
+
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    /*public TextAsset txtFile;
 
     private void showNewLevel()
     {
@@ -254,11 +360,13 @@ public class GameManager : MonoBehaviour
         var player = new Player();
         player.load();
 
-        LevelWords = GetlevelWords(difficulty , subLevel-1);
+        //LevelWords = GetlevelWords(difficulty , subLevel-1);
 
         puzzleSize = subLevel < 4 ? subLevel + 2 : 6;
 
-        LevelWords = ui.toUpperCase(LevelWords);
+        var stringOfTxt = txtFile.text;
+        LevelWords = stringOfTxt.Split('\n').ToList();
+        //LevelWords = ui.toUpperCase(LevelWords);
       
         ScorePoint = 0;
         CountDown = maxCountDown;
@@ -278,18 +386,44 @@ public class GameManager : MonoBehaviour
                 break;
         }
         ui.setLevelText(subLevel);
+        List<string> allTemplates = new List<string>();
 
-        addedWords = ui.Create(LevelWords, puzzleSize, letterSize);
 
-        removeAddedFromWords();
+        for (int k = 0; k < 50; k++)
+        {
+            LevelWords = stringOfTxt.Split('\n').ToList();
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 6; j++)
+                {
 
+                    puzzleSize = (j + 1) < 4 ? (j + 1) + 2 : 6;
+                    letterSize = i + 4;
+                    addedWords = ui.Create2(LevelWords, puzzleSize, letterSize);
+
+                    allTemplates.Add("Zorluk : " + i + " Seviye : " + (j + 1));
+                    foreach (var word in addedWords)
+                    {
+                        allTemplates.Add(word);
+                    }
+                    removeAddedFromWords();
+
+                }
+
+            }
+            
+            var path = @"/Users/salihcnkhy/KelimeKalıpları/Words_"+k+".txt";
+
+            File.WriteAllLines(path, allTemplates);
+            allTemplates.Clear();
+        }
         foreach (var word in addedWords)
         {
             print(word);
         }
    
     }
-
+    */
     private void removeAddedFromWords()
     {
         foreach (var added in addedWords)
@@ -303,33 +437,9 @@ public class GameManager : MonoBehaviour
         if(addedWords.Count == 0)
         {
 
-            var player = new Player();
-            player.load();
-
-            var lastMaxScore = 0;
-            switch (difficulty)
-            {
-                case 0:
-                     lastMaxScore = player.easy[subLevel - 1];
-                    player.easy[subLevel - 1] = lastMaxScore < ScorePoint ? ScorePoint : lastMaxScore;
-                    break;
-                case 1:
-                     lastMaxScore = player.medium[subLevel - 1];
-                    player.medium[subLevel - 1] = lastMaxScore < ScorePoint ? ScorePoint : lastMaxScore;
-                    break;
-                case 2:
-                     lastMaxScore = player.hard[subLevel - 1];
-                    player.hard[subLevel - 1] = lastMaxScore < ScorePoint  ? ScorePoint : lastMaxScore;
-                    break;
-
-            }
+            GameObject.Find("UI").transform.Find("Canvas").GetComponent<Animator>().SetTrigger("ShowLevelPassedPanel");
             
-            SaveSystem.SavePlayer(player);
-
-            subLevel++;
-            StartCoroutine(MoveToZero());
-            StopCoroutine(StartCountDown());
-            //Go to next level of mode
+           
         }
     }
 
@@ -357,7 +467,7 @@ public class GameManager : MonoBehaviour
         }
         foreach (var bul in bullets)
         {
-            Destroy(bul);
+            bul.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, -2));
         }
     }
 
@@ -395,32 +505,6 @@ public class GameManager : MonoBehaviour
 
     }
 
-    IEnumerator MoveToZero()
-    {
-        // This looks unsafe, but Unity uses
-        // en epsilon when comparing vectors.
-        var destination = new Vector3(0, 0, 0);
 
-        foreach(var letter in ui.letters)
-        {
-            var mover = letter.transform;
-
-            while (mover.position != destination)
-            {
-                mover.position = Vector3.MoveTowards(
-                    mover.position,
-                    destination,
-                    5f * Time.deltaTime);
-                // Wait a frame and move again.
-                yield return null;
-            }
-            yield return new WaitForSeconds(0.1f);
-
-
-        }
-
-        showNewLevel();
-
-    }
 
 }

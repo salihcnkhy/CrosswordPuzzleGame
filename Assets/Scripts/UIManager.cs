@@ -35,6 +35,12 @@ public class UIManager : MonoBehaviour
         return addedWords;
     }
 
+    public List<string> Create2(List<string> words, int puzzleSize, int letterSize)
+    {
+        var addedWords = cwc.createWordList(words, puzzleSize, letterSize);
+        return addedWords;
+    }
+
     public void setLevelText(int level)
     {
         canvas.transform.Find("LevelText")
