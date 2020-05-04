@@ -2,28 +2,39 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour
 {
 
     int difficulty = 0;
+    Player player;
 
+    private void Start()
+    {
 
-    public void loadScene(string mode)
+        player = new Player();
+        player.load();
+        checkContinue();
+
+    }
+
+    public void loadScene(bool isNew)
     {
         PlayerPrefs.SetInt("difficulty", difficulty);
 
-        switch (mode)
+        if (isNew)
         {
-            case "infinite":
-                SceneManager.LoadScene("InfiniteModeScene");
-                break;
-            case "keepAlive":
-                SceneManager.LoadScene("KeepAliveModeScene");
-                break;
-            case "againstTime":
-                SceneManager.LoadScene("AgainstTimeModeScene");
-                break;
+            PlayerPrefs.SetInt("subLevel", 0);
+            player.lastLevels[difficulty] = 0;
+            SaveSystem.SavePlayer(player);
+            SceneManager.LoadScene(1);
+
+        }
+        else
+        {
+            PlayerPrefs.SetInt("subLevel", player.lastLevels[difficulty]);
+            SceneManager.LoadScene(1);
         }
 
     }
@@ -41,6 +52,21 @@ public class LevelManager : MonoBehaviour
         updateDifficulty();
     }
 
+    private void checkContinue()
+    {
+        if (player.lastLevels[difficulty] == 0)
+        {
+            transform.Find("ContinueButton").gameObject.SetActive(false);
+        }
+        else
+        {
+            transform.Find("ContinueButton").gameObject.SetActive(true);
+
+        }
+        print(player.lastLevels[difficulty]);
+      
+    }
+
     private void updateDifficulty()
     {
 
@@ -49,7 +75,7 @@ public class LevelManager : MonoBehaviour
         {
             textMesh.text = "EASY";
             difficulty = 0;
-            
+
         }   else if(difficulty == -2 || difficulty == 1)
         {
             textMesh.text = "MEDIUM";
@@ -60,5 +86,6 @@ public class LevelManager : MonoBehaviour
             textMesh.text = "HARD";
             difficulty = 2;
         }
+        checkContinue();
     }
 }

@@ -11,7 +11,7 @@ public class PlayerProfile
     public int[] easy;
     public int[] medium;
     public int[] hard;
-
+    public int[] lastLevels;
 
     public PlayerProfile(Player player)
     {
@@ -19,5 +19,6 @@ public class PlayerProfile
         easy = player.easy;
         medium = player.medium;
         hard = player.hard;
+        lastLevels = player.lastLevels;
     }
 }

@@ -19,6 +19,7 @@ public class LeaderBoardManager : MonoBehaviour
 
     public void setLvScores()
     {
+        print(scrollCount);
 
         int[] scores = new int[6];
         var modeText = transform.Find("ModeText").GetComponent<TMPro.TextMeshProUGUI>();

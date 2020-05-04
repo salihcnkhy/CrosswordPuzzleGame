@@ -11,8 +11,8 @@ public class UIManager : MonoBehaviour
     public GameObject latterField;
     public GameObject wordLetterField;
 
-    private GameObject lettersField;
-    private TMPro.TextMeshProUGUI dragText;
+    private GameObject planetField;
+    private TMPro.TextMeshProUGUI hittedTextMesh;
     private CrossWordCreateManager cwc;
     private GameObject canvas;
     public List<GameObject> letters;
@@ -22,8 +22,8 @@ public class UIManager : MonoBehaviour
         letters = new List<GameObject>();
 
         canvas = transform.Find("Canvas").gameObject;
-        lettersField = transform.Find("LettersField").gameObject;
-        dragText = canvas.transform.Find("ShootedText").gameObject.GetComponent<TMPro.TextMeshProUGUI>();
+        planetField = transform.Find("LettersField").gameObject;
+        hittedTextMesh = canvas.transform.Find("ShootedText").gameObject.GetComponent<TMPro.TextMeshProUGUI>();
         cwc = GetComponent<CrossWordCreateManager>();
 
     }
@@ -40,6 +40,29 @@ public class UIManager : MonoBehaviour
     {
         var addedWords = cwc.createWordList(words, puzzleSize, letterSize);
         return addedWords;
+    }
+
+    public void showLevelPassedPanel(int currentScore , int bestScore , int level)
+    {
+        if(level == 5)
+        {
+            canvas.transform.Find("LevelPassedPanel").Find("ContinueButton").gameObject.SetActive(false);
+        }
+
+
+        var currentScoreText = canvas.transform.Find("LevelPassedPanel").Find("LastScoreText").GetComponent<TMPro.TextMeshProUGUI>();
+        if(currentScore > bestScore)
+        {
+           currentScoreText.transform.Find("NewScoreText").gameObject.SetActive(true);
+
+        }
+        var bestScoreText = canvas.transform.Find("LevelPassedPanel").Find("BestScoreText").GetComponent<TMPro.TextMeshProUGUI>();
+
+        currentScoreText.text = currentScore.ToString();
+        bestScoreText.text = bestScore.ToString();
+
+        canvas.GetComponent<Animator>().SetTrigger("ShowLevelPassedPanel");
+
     }
 
     public void setLevelText(int level)
@@ -64,7 +87,7 @@ public class UIManager : MonoBehaviour
 
     public void OnHittedLetterUpdate(string letter)
     {
-        dragText.text = letter;
+        hittedTextMesh.text = letter;
 
     }
     public void OnScorePointUpdate(int scorePoint)
@@ -101,7 +124,7 @@ public class UIManager : MonoBehaviour
     }
 
 
-
+    
 
     private void CreateLetterPoints(List<string> words)
     {
@@ -130,13 +153,13 @@ public class UIManager : MonoBehaviour
 
             var obj = Instantiate(latterField);
 
-            obj.transform.position = lettersField.transform.position;
+            obj.transform.position = planetField.transform.position;
 
             obj.transform.Find("LetterField").GetComponent<TMPro.TextMeshPro>().text = randomChars.Dequeue().ToString();
 
 
-            x = Mathf.Sin(Mathf.Deg2Rad * angle) * (lettersField.GetComponent<SpriteRenderer>().bounds.size.x / 2f);
-            y = Mathf.Cos(Mathf.Deg2Rad * angle) * (lettersField.GetComponent<SpriteRenderer>().bounds.size.x / 2f);
+            x = Mathf.Sin(Mathf.Deg2Rad * angle) * (planetField.GetComponent<SpriteRenderer>().bounds.size.x / 2f);
+            y = Mathf.Cos(Mathf.Deg2Rad * angle) * (planetField.GetComponent<SpriteRenderer>().bounds.size.x / 2f);
 
             obj.transform.position += new Vector3(x, y, z);
 

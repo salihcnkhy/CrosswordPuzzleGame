@@ -55,6 +55,7 @@ public class CrossWordCreateManager : MonoBehaviour
         return addedWordStrings;
 
     }
+
     private Queue<T> getRandomQueueFromList<T>(List<T> list)
     {
         Queue<T> queue = new Queue<T>();

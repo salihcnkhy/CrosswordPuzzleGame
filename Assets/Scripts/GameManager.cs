@@ -9,14 +9,11 @@ public class GameManager : MonoBehaviour
 
     private UIManager ui;
     private string hittedLetter = "";
-    private const int maxCountDown = 20;
-    private int countDown = 20;
     private int misstakeCount = 0;
     private int scorePoint = 0;
     private List<GameObject> bullets = new List<GameObject>();
-    private int subLevel = 0;
+    private int subLevel;
     private int difficulty;
-
     private int puzzleSize;
     private int letterSize;
 
@@ -33,19 +30,8 @@ public class GameManager : MonoBehaviour
             OnLetterUpdate?.Invoke(hittedLetter);
         }
     }
-    public int CountDown
-    {
-        get
-        {
-            return countDown;
-        }
-        set
-        {
-            countDown = value;
-            OnCountDownUpdate?.Invoke(countDown);
-        }
-    }
-
+    public double passedTime = 0;
+   
     public int ScorePoint
     {
         get
@@ -62,17 +48,13 @@ public class GameManager : MonoBehaviour
 
     private Player Player;
 
-    bool isLevelEnd = false;
-
-    public List<string> LevelWords; // TODO: static classtaki fonksiyona eşitleyeceğin kelimeler bunlar
+    public List<string> LevelWords; 
     private List<string> addedWords;
     public event OnLetterUpdateDelegate OnLetterUpdate;
-    public event OnCountDownUpdateDelegate OnCountDownUpdate;
     public event OnScorePointUpdateDelegate OnScorePointUpdate;
 
 
     public delegate void OnLetterUpdateDelegate(string lastHitted);
-    public delegate void OnCountDownUpdateDelegate(int countDown);
     public delegate void OnScorePointUpdateDelegate(int scorePoint);
 
     #region JSON Serializable
@@ -239,26 +221,29 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         difficulty = PlayerPrefs.GetInt("difficulty");
+        subLevel = PlayerPrefs.GetInt("subLevel");
+
+        
+        Player = new Player();
+        Player.load();
+
+        Player.lastLevels[difficulty] = subLevel;
+
         letterSize = difficulty + 4;
 
         ui = GameObject.Find("UI").GetComponent<UIManager>();
 
         OnLetterUpdate += ui.OnHittedLetterUpdate;
         OnScorePointUpdate += ui.OnScorePointUpdate;
-        OnCountDownUpdate += ui.OnCountDownUpdate;
 
-        Player = new Player();
-        Player.load();
-
-        StartCoroutine(ShowLevel(0));
+        StartShowingLevel(0);
+        StartCoroutine(StartCount());
     }
 
     public void StartShowingLevel(int cmd)
     {
         StartCoroutine(ShowLevel(cmd));
     }
-
-
 
     private IEnumerator ShowLevel(int cmd)
     {
@@ -270,43 +255,42 @@ public class GameManager : MonoBehaviour
         else if(cmd == 1 || cmd == 2)
         {
             GameObject.Find("UI").transform.Find("Canvas").GetComponent<Animator>().SetTrigger("RemoveLevelPassedPanel");
+           
 
-            if(cmd==1)
+            if(cmd == 1)
+            {
+                subLevel++;
+               
+            }
             saveDataFromLastLevel();
 
-
         }
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1); 
 
-        if (cmd == 0 || cmd == 1)
-        {
-            subLevel++;
-        }
-             
+        LevelWords = GetlevelWords(difficulty, subLevel);
 
-        LevelWords = GetlevelWords(difficulty, subLevel - 1);
-
-        puzzleSize = subLevel < 4 ? subLevel + 2 : 6;
+        puzzleSize = subLevel < 3 ? subLevel + 3 : 6;
 
         LevelWords = ui.toUpperCase(LevelWords);
 
         ScorePoint = 0;
+        passedTime = 0;
 
         switch (difficulty)
         {
             case 0:
-                ui.setLeaderScoreText(Player.easy[subLevel - 1]);
+                ui.setLeaderScoreText(Player.easy[subLevel]);
                 break;
             case 1:
-                ui.setLeaderScoreText(Player.medium[subLevel - 1]);
+                ui.setLeaderScoreText(Player.medium[subLevel]);
 
                 break;
             case 2:
-                ui.setLeaderScoreText(Player.hard[subLevel - 1]);
+                ui.setLeaderScoreText(Player.hard[subLevel]);
 
                 break;
         }
-        ui.setLevelText(subLevel);
+        ui.setLevelText(subLevel+1);
 
         addedWords = ui.Create(LevelWords, puzzleSize, letterSize);
 
@@ -340,13 +324,20 @@ public class GameManager : MonoBehaviour
                 break;
 
         }
+        subLevel = subLevel == 6 ? 5 : subLevel;
+        Player.lastLevels[difficulty] = subLevel;
 
-     
+
         SaveSystem.SavePlayer(Player);
     }
 
-    public void LoadMainMenu()
+    public void LoadMainMenu(bool isLevelPassed)
     {
+        if (isLevelPassed)
+        {
+            subLevel++;
+            saveDataFromLastLevel();
+        }
         SceneManager.LoadScene(0);
     }
 
@@ -435,21 +426,36 @@ public class GameManager : MonoBehaviour
         if(addedWords.Count == 0)
         {
 
-            GameObject.Find("UI").transform.Find("Canvas").GetComponent<Animator>().SetTrigger("ShowLevelPassedPanel");
-            
-           
+            var bestScore = 0;
+            switch (difficulty)
+            {
+                case 0:
+                    bestScore = Player.easy[subLevel];
+                    break;
+                case 1:
+                    bestScore = Player.medium[subLevel];
+                    Player.medium[subLevel] = bestScore < ScorePoint ? ScorePoint : bestScore;
+                    break;
+                case 2:
+                    bestScore = Player.hard[subLevel];
+                    break;
+
+            }
+            ui.showLevelPassedPanel(ScorePoint, bestScore,subLevel);
         }
     }
+    
 
     public void PressedTryButton()
     {
 
         if (addedWords.Contains(HittedLetter))
         {
-            float timeFactor = (CountDown / maxCountDown) + 1;
-            float score = 10 * HittedLetter.Length * timeFactor - 5 * misstakeCount;
+            double timeFactor = 1 / ((passedTime/7) + Convert.ToDouble(misstakeCount));
+            double score = (10 * HittedLetter.Length) * timeFactor;
+            print(score);
             ScorePoint += Convert.ToInt32(score);
-            CountDown = maxCountDown;
+            passedTime = 0;
             misstakeCount = 0;
             ui.openWord(HittedLetter);
             addedWords.Remove(HittedLetter);
@@ -487,19 +493,17 @@ public class GameManager : MonoBehaviour
         Destroy(bulletRb);
         bullet.transform.SetParent(hitted.transform);
         bullets.Add(bullet);
-        print(hitted.transform.Find("LetterField").GetComponent<TMPro.TextMeshPro>().text);
         HittedLetter += hitted.transform.Find("LetterField").GetComponent<TMPro.TextMeshPro>().text;
         
     }
 
-    private IEnumerator StartCountDown(int countDownValue = maxCountDown)
+    private IEnumerator StartCount()
     {
-
-        CountDown = countDownValue;
-        while(CountDown != 0)
+        passedTime = 0;
+        while(true)
         {
-            yield return new WaitForSeconds(1);
-            CountDown--;
+            yield return new WaitForSeconds(0.1f);
+            passedTime += 0.1f;
         }
 
     }

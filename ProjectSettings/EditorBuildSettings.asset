@@ -12,12 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 06b6602e6e5ac4a2f9fc1e568cf80580
   - enabled: 1
-    path: Assets/Scenes/InfiniteModeScene.unity
-    guid: 4d01bf7fad1914c95b27462908449f7f
-  - enabled: 1
-    path: Assets/Scenes/KeepAliveModeScene.unity
-    guid: bb73fa67c722a461bb4ba6eb4462a48f
-  - enabled: 1
-    path: Assets/Scenes/AgainstTimeModeScene.unity
+    path: Assets/Scenes/GameScene.unity
     guid: 9dcf3dbf06729438596c59f4008a04a7
   m_configObjects: {}

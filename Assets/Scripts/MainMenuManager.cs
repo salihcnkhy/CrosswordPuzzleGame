@@ -8,6 +8,8 @@ public class MainMenuManager : MonoBehaviour
 
     private void Awake()
     {
+       
+      
         try
         {
            profile = SaveSystem.LoadPlayerProfile();

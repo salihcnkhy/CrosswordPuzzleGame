@@ -8,6 +8,7 @@ public class Player
     public int[] easy = new int[6];
     public int[] medium = new int[6];
     public int[] hard = new int[6];
+    public int[] lastLevels = {0,0,0};
 
     public void load()
     {
@@ -19,6 +20,7 @@ public class Player
             easy = profile.easy;
             medium = profile.medium;
             hard = profile.hard;
+            lastLevels = profile.lastLevels;
         }
         catch 
         {
